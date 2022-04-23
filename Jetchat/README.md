@@ -1,11 +1,15 @@
 <img src="screenshots/jetchatlogo.png"/>
 
-# Jetchat sample
+# Jetchat + Crane
 
-Jetchat에 Crane의 Map loading functionality 추가.
+Jetchat에 Crane의 Map loading functionality 추가. \n
 지도 로딩을 위해선 Google API key를 `locals.properties`에 등록해야 함.
 
-```google.maps.key={insert_your_api_key_here}```
+```
+google.maps.key={insert_your_api_key_here}
+```
+
+# Jetchat sample
 
 Jetchat is a sample chat app built with [Jetpack Compose][compose].
 
