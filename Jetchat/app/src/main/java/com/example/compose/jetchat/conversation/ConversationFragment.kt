@@ -75,13 +75,7 @@ class ConversationFragment : Fragment() {
                             WindowInsets
                                 .navigationBars
                                 .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
-                        ),
-                        onComposeMapClicked = {
-                            launchComposeMapActivity(context = requireContext())
-                        },
-                        onMapClicked = {
-                            launchMapActivity(context = requireContext())
-                        }
+                        )
                     )
                 }
             }

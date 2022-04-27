@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
@@ -54,6 +55,8 @@ import androidx.compose.ui.unit.sp
 import com.example.compose.jetchat.FunctionalityNotAvailablePopup
 import com.example.compose.jetchat.R
 import com.example.compose.jetchat.base.OnMapSelectorClicked
+import com.example.compose.jetchat.map.launchComposeMapActivity
+import com.example.compose.jetchat.map.launchMapActivity
 
 enum class InputSelector {
     NONE,
@@ -81,8 +84,6 @@ fun UserInput(
     onMessageSent: (String) -> Unit,
     modifier: Modifier = Modifier,
     resetScroll: () -> Unit = { },
-    onComposeMapClicked: OnMapSelectorClicked = { },
-    onMapClicked: OnMapSelectorClicked = { }
 ) {
     var currentInputSelector by rememberSaveable { mutableStateOf(InputSelector.NONE) }
     val dismissKeyboard = { currentInputSelector = InputSelector.NONE }
@@ -130,9 +131,7 @@ fun UserInput(
             SelectorExpanded(
                 onCloseRequested = dismissKeyboard,
                 onTextAdded = { textState = textState.addText(it) },
-                currentSelector = currentInputSelector,
-                onComposeMapClicked = onComposeMapClicked,
-                onMapClicked = onMapClicked
+                currentSelector = currentInputSelector
             )
         }
     }
@@ -157,8 +156,6 @@ private fun SelectorExpanded(
     currentSelector: InputSelector,
     onCloseRequested: () -> Unit,
     onTextAdded: (String) -> Unit,
-    onComposeMapClicked: OnMapSelectorClicked,
-    onMapClicked: OnMapSelectorClicked
 ) {
     if (currentSelector == InputSelector.NONE) return
 
@@ -176,7 +173,7 @@ private fun SelectorExpanded(
             InputSelector.EMOJI -> EmojiSelector(onTextAdded, focusRequester)
             InputSelector.DM -> NotAvailablePopup(onCloseRequested)
             InputSelector.PICTURE -> FunctionalityNotAvailablePanel()
-            InputSelector.MAP -> MapSelector(onComposeMapClicked, onMapClicked)
+            InputSelector.MAP -> MapSelector()
             InputSelector.PHONE -> FunctionalityNotAvailablePanel()
             else -> {
                 throw NotImplementedError()
@@ -445,10 +442,10 @@ fun EmojiSelector(
 }
 
 @Composable
-fun MapSelector(
-    onComposeMapClicked: OnMapSelectorClicked,
-    onMapClicked: OnMapSelectorClicked
-) {
+fun MapSelector() {
+    val context = LocalContext.current
+    val onComposeMapClicked = { launchComposeMapActivity(context) }
+    val onMapClicked = { launchMapActivity(context) }
     Row(
         modifier = Modifier
             .fillMaxWidth()

@@ -56,13 +56,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -100,8 +94,6 @@ fun ConversationContent(
     navigateToProfile: (String) -> Unit,
     modifier: Modifier = Modifier,
     onNavIconPressed: () -> Unit = { },
-    onComposeMapClicked: OnMapSelectorClicked = { },
-    onMapClicked: OnMapSelectorClicked = { }
 ) {
     val authorMe = stringResource(R.string.author_me)
     val timeNow = stringResource(id = R.string.now)
@@ -139,8 +131,6 @@ fun ConversationContent(
                     modifier = Modifier
                         .navigationBarsPadding()
                         .imePadding(),
-                    onComposeMapClicked = onComposeMapClicked,
-                    onMapClicked = onMapClicked
                 )
             }
             // Channel name bar floats above the messages

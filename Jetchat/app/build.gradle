@@ -31,6 +31,7 @@ if (rootProject.file("local.properties").exists()) {
 // The local.properties key takes precedence
 String systemGoogleMapsKey = System.getenv("GOOGLE_MAPS_KEY") ?: ""
 String googleMapsKey = properties.getProperty("google.maps.key", systemGoogleMapsKey)
+String naverMapsKey = properties.getProperty("naver.maps.key", "")
 
 android {
     compileSdkVersion 31
@@ -142,9 +143,6 @@ dependencies {
     // google map with compose sdk
     implementation "com.google.maps.android:maps-compose:2.1.0"
     implementation "com.google.android.gms:play-services-maps:18.0.2"
-
-    // google map
-
 
     debugImplementation Libs.AndroidX.Compose.uiTestManifest
 
